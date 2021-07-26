@@ -40,11 +40,11 @@ class ClientCrudController extends CrudController
     protected function setupListOperation()
     {
         $this->crud->denyAccess('show');
-        $this->crud->enableExportButtons();
+        
         $this->crud->addColumn([
             'name'      => 'firstname',
             'label'     => trans('crud.client.firstname'),
-         ]);
+        ]);
         
         $this->crud->addColumn([
             'name'      => 'lastname',

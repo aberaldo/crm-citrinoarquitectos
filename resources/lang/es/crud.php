@@ -12,6 +12,12 @@ return [
         'budgets' => 'Presupuestos',
     ],
     
+    'service' => [
+        'service' => 'Servicio',
+        'services' => 'Servicios',
+        'name' => 'Nombre',
+    ],
+    
     'client' => [
         'client' => 'Cliente',
         'clients' => 'Clientes',
