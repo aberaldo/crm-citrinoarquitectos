@@ -10,6 +10,20 @@ return [
     'budget' => [
         'budget' => 'Presupuesto',
         'budgets' => 'Presupuestos',
+        'head' => 'Encabezado',
+        'date' => 'Fecha',
+        'title' => 'Objeto',
+        'address' => 'Dirección',
+        'condition' => 'Condición',
+        'description' => 'Descripción',
+        'commercialConditions' => 'Condiciones comerciales',
+        'note' => 'Nota',
+        'notes' => 'Notas',
+        'member' => 'Miembro',
+        'name' => 'Nombre',
+        'team' => 'Equipo técnico',
+        'services' => 'Servicios',
+        'AddService' => 'Agregar Servicio',
     ],
     
     'service' => [
