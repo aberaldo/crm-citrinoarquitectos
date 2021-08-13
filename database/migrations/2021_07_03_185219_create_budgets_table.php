@@ -15,10 +15,14 @@ class CreateBudgetsTable extends Migration
     {
         Schema::create('budgets', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('client_id');
-            $table->date('date');
-            $table->date('due_date');
-            $table->text('description');
+            $table->string('title')->nullable();
+            $table->foreignId('client_id')->constrained()->nullable();
+            $table->date('date')->nullable();
+            $table->string('address')->nullable();
+            $table->json('headings')->nullable();
+            $table->json('conditions')->nullable();
+            $table->longText('notes')->nullable();
+            $table->json('team')->nullable();
             $table->timestamps();
         });
     }

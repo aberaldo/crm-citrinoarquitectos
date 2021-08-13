@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests\BudgetRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
+use Backpack\CRUD\app\Library\Widget;
 
 /**
  * Class BudgetCrudController
@@ -14,10 +15,12 @@ use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 class BudgetCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation { store as traitStore; }
+    use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation { update as traitUpdate; }
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\FetchOperation;
+
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
@@ -40,13 +43,68 @@ class BudgetCrudController extends CrudController
     protected function setupListOperation()
     {
         $this->crud->denyAccess('show');
-        CRUD::setFromDb(); // columns
+        $this->crud->addButtonFromView('line', 'pdf', 'pdf', 'beginning');
 
-        /**
-         * Columns can be defined using the fluent syntax or array syntax:
-         * - CRUD::column('price')->type('number');
-         * - CRUD::addColumn(['name' => 'price', 'type' => 'number']); 
-         */
+        $this->crud->addColumn([
+            'name'         => 'id',
+            'type'         => 'text',
+            'label'        => trans('crud.budget.id'),
+        ]);
+        
+        $this->crud->addColumn([
+            'name'         => 'client',
+            'type'         => 'relationship',
+            'label'        => trans('crud.client.client'),
+            'entity'    => 'client',
+            'attribute' => 'full_name',
+            'model'     => App\Models\Client::class, 
+        ]);
+
+        $this->crud->addColumn([
+            'name'         => 'title',
+            'type'         => 'text',
+            'label'        => trans('crud.budget.title'),
+        ]);
+
+        $this->crud->addColumn([
+            'name'         => 'date',
+            'type'         => 'date',
+            'label'        => trans('crud.budget.date'),
+        ]);
+
+        $this->crud->addFilter([
+            'type'  => 'text',
+            'name'  => 'id',
+            'label' => trans('crud.budget.id')
+        ], 
+        false, 
+        function($value) {
+            $this->crud->addClause('where', 'id', '=', "$value");
+        });
+
+        $this->crud->addFilter([
+            'name'  => 'client',
+            'type'  => 'select2_ajax',
+            'label' => trans('crud.client.client'),
+            'method' => 'POST',
+            'minimum_input_length' => 0,
+            'select_attribute' => 'full_name',
+            'select_key' => 'id',
+        ], 
+        backpack_url('budget/fetch/client'),
+        function ($value) {
+            $this->crud->addClause('where', 'client_id', $value);
+        });
+
+        $this->crud->addFilter([
+            'type'  => 'text',
+            'name'  => 'title',
+            'label' => trans('crud.budget.title')
+        ], 
+        false, 
+        function($value) {
+            $this->crud->addClause('where', 'title', 'LIKE', "%$value%");
+        });
     }
 
     /**
@@ -59,6 +117,10 @@ class BudgetCrudController extends CrudController
     {
         CRUD::setValidation(BudgetRequest::class);
 
+        Widget::add()
+              ->to('after_content')
+              ->type('budget');
+    
         $this->crud->addField([
             'name'  => 'title',
             'label' => trans('crud.budget.title'),
@@ -70,13 +132,15 @@ class BudgetCrudController extends CrudController
         ]);
         
         $this->crud->addField([
-            'name'  => 'client_id',
             'label' => trans('crud.client.client'),
-            'type'  => 'relationship',
-            'allows_null' => true,
-            'wrapper'   => [
-                'class' => 'form-group col-md-6'
-            ],
+            'type' => "relationship",
+            'name'  => 'client_id',
+            'attribute' => 'full_name',
+            'ajax' => true,
+            'data_source' => backpack_url('budget/fetch/client'),
+            'placeholder' => trans('crud.client.client'),
+            'minimum_input_length' => 0,
+            'wrapper' => ['class' => 'form-group col-md-6'],
             'tab' => trans('crud.budget.head'),
         ]);
         
@@ -100,33 +164,86 @@ class BudgetCrudController extends CrudController
             'tab' => trans('crud.budget.head'),
         ]);
         
-       /* $this->crud->addField([   // repeatable
-            'name'  => 'testimonials',
-            'label' => 'Testimonials',
+        $this->crud->addField([
+            'name'  => 'headings',
+            'label' => trans('crud.budget.headings'),
             'type'  => 'repeatable',
             'fields' => [
                 [
-                    'name'  => 'service_id',
-                    'label' => trans('crud.service.service'),
-                    'type'  => 'select2_from_ajax',
-                    'entity' => 'service',
-                    'attribute' => 'name',
-                    'allows_null' => true,
-                    'wrapper'   => [
-                        'class' => 'form-group col-md-6'
+                    'name'  => 'heading',
+                    'label' => trans('crud.budget.description'),
+                    'type'  => 'text',
+                ],
+                [
+                    'name'            => 'subheading',
+                    'label'           => trans('crud.budget.subheadings'),
+                    'type'            => 'table_citrino',
+                    'entity_singular' => trans('crud.budget.subheading'),
+                    'columns'         => [
+                        'description'  => [
+                            'label' => trans('crud.budget.description'),
+                            'type' => 'textarea',
+                            'class' => 'col-sm-6',
+                        ],
+                        'unit'  => [
+                            'label' => trans('crud.budget.unit'),
+                            'type' => 'text',
+                            'class' => 'col-sm-1',
+                        ],
+                        'qty'  => [
+                            'label' => trans('crud.budget.qty'),
+                            'type' => 'number',
+                            'class' => 'col-sm-1',
+                        ],
+                        'price'  => [
+                            'label' => trans('crud.budget.price'),
+                            'type' => 'number',
+                            'class' => 'col-sm-2',
+                        ],
                     ],
                 ],
             ],
         
-            'new_item_label'  => trans('crud.budget.AddService'),
+            'new_item_label'  => trans('crud.budget.addHeading'),
             'init_rows' => 0,
-            'tab' => trans('crud.budget.services'),
+            'tab' => trans('crud.budget.headings'),
         
-        ]);*/
+        ]);
+
+        $this->crud->addField([
+            'name' => 'subtotal',
+            'label' => 'Subtotal',
+            'type' => 'number',
+            'attributes' => [
+                "readonly" => "true",
+                'class' => 'form-control col-md-2',
+            ],
+            'tab' => trans('crud.budget.headings'),
+        ]);
+        $this->crud->addField([
+            'name' => 'iva',
+            'label' => 'IVA',
+            'type' => 'number',
+            'attributes' => [
+                "readonly" => "true",
+                'class' => 'form-control col-md-2',
+            ],
+            'tab' => trans('crud.budget.headings'),
+        ]);
+        $this->crud->addField([
+            'name' => 'total',
+            'label' => 'Total',
+            'type' => 'number',
+            'attributes' => [
+                "readonly" => "true",
+                'class' => 'form-control col-md-2',
+            ],
+            'tab' => trans('crud.budget.headings'),
+        ]);
         
         $this->crud->addField([
-            'name'            => 'commercial_conditions',
-            'label'           => trans('crud.budget.commercialConditions'),
+            'name'            => 'conditions',
+            'label'           => trans('crud.budget.conditions'),
             'type'            => 'table',
             'entity_singular' => trans('crud.budget.condition'),
             'columns'         => [
@@ -135,20 +252,16 @@ class BudgetCrudController extends CrudController
             ],
             'max' => 50,
             'min' => 0,
-            'tab' => trans('crud.budget.commercialConditions'),
+            'tab' => trans('crud.budget.conditions'),
         ],);
         
         $this->crud->addField([
             'name'            => 'notes',
             'label'           => trans('crud.budget.notes'),
-            'type'            => 'table',
-            'entity_singular' => trans('crud.budget.note'),
-            'columns'         => [
-                'name'  => trans('crud.budget.note'),
-                'desc'  => trans('crud.budget.description'),
+            'type'            => 'textarea',
+            'attributes' => [
+                'rows' => 5,
             ],
-            'max' => 50,
-            'min' => 0,
             'tab' => trans('crud.budget.notes'),
         ],);
         
@@ -176,5 +289,15 @@ class BudgetCrudController extends CrudController
     protected function setupUpdateOperation()
     {
         $this->setupCreateOperation();
+    }
+    
+    public function fetchClient()
+    {
+
+        return $this->fetch([
+            'model' => \App\Models\Client::class,
+            'searchable_attributes' => ['firstname', 'lastname'],
+        ]);
+       
     }
 }

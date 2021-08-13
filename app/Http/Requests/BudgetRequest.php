@@ -26,7 +26,10 @@ class BudgetRequest extends FormRequest
     public function rules()
     {
         return [
-            // 'name' => 'required|min:5|max:255'
+            'title' => 'required|min:3|max:255',
+            'client_id' => 'required|min:1|max:255',
+            'date' => 'required|min:3|max:255',
+            'address' => 'required|min:3|max:255',
         ];
     }
 
@@ -50,7 +53,7 @@ class BudgetRequest extends FormRequest
     public function messages()
     {
         return [
-            //
+            'title.required' => "El campo objeto es obligatorio"
         ];
     }
 }
