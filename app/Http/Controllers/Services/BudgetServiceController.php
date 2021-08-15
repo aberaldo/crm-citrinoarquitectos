@@ -15,177 +15,278 @@ class BudgetServiceController extends Controller
         $pdf = app('dompdf.wrapper');
        
         $pdf->loadHTML('
-        <head>
-            <link rel="stylesheet" href="packages/backpack/base/css/bundle.css">
-        </head>
-        <style>
-        body{margin-top:20px;
-            background:#eee;
-            }
-            
-            .invoice {
-                padding: 30px;
-            }
-            
-            .invoice h2 {
-                margin-top: 0px;
-                line-height: 0.8em;
-            }
-            
-            .invoice .small {
-                font-weight: 300;
-            }
-            
-            .invoice hr {
-                margin-top: 10px;
-                border-color: #ddd;
-            }
-            
-            .invoice .table tr.line {
-                border-bottom: 1px solid #ccc;
-            }
-            
-            .invoice .table td {
-                border: none;
-            }
-            
-            .invoice .identity {
-                margin-top: 10px;
-                font-size: 1.1em;
-                font-weight: 300;
-            }
-            
-            .invoice .identity strong {
-                font-weight: 600;
-            }
-            
-            
-            .grid {
-                position: relative;
-                width: 100%;
-                background: #fff;
-                color: #666666;
-                border-radius: 2px;
-                margin-bottom: 25px;
-                box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.1);
-            }
-        </style>
-        <div class="container">
-<div class="row">
-    				<!-- BEGIN INVOICE -->
-					<div class="col-xs-12">
-						<div class="grid invoice">
-							<div class="grid-body">
-								<div class="invoice-title">
-									<div class="row">
-										<div class="col-xs-12">
-											<img src="http://vergo-kertas.herokuapp.com/assets/img/logo.png" alt="" height="35">
-										</div>
-									</div>
-									<br>
-									<div class="row">
-										<div class="col-xs-12">
-											<h2>invoice<br>
-											<span class="small">order #1082</span></h2>
-										</div>
-									</div>
-								</div>
-								<hr>
-								<div class="row">
-									<div class="col-xs-6">
-										<address>
-											<strong>Billed To:</strong><br>
-											Twitter, Inc.<br>
-											795 Folsom Ave, Suite 600<br>
-											San Francisco, CA 94107<br>
-											<abbr title="Phone">P:</abbr> (123) 456-7890
-										</address>
-									</div>
-									<div class="col-xs-6 text-right">
-										<address>
-											<strong>Shipped To:</strong><br>
-											Elaine Hernandez<br>
-											P. Sherman 42,<br>
-											Wallaby Way, Sidney<br>
-											<abbr title="Phone">P:</abbr> (123) 345-6789
-										</address>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-xs-6">
-										<address>
-											<strong>Payment Method:</strong><br>
-											Visa ending **** 1234<br>
-											h.elaine@gmail.com<br>
-										</address>
-									</div>
-									<div class="col-xs-6 text-right">
-										<address>
-											<strong>Order Date:</strong><br>
-											17/06/14
-										</address>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-md-12">
-										<h3>ORDER SUMMARY</h3>
-										<table class="table table-striped">
-											<thead>
-												<tr class="line">
-													<td><strong>#</strong></td>
-													<td class="text-center"><strong>PROJECT</strong></td>
-													<td class="text-center"><strong>HRS</strong></td>
-													<td class="text-right"><strong>RATE</strong></td>
-													<td class="text-right"><strong>SUBTOTAL</strong></td>
-												</tr>
-											</thead>
-											<tbody>
-												<tr>
-													<td>1</td>
-													<td><strong>Template Design</strong><br>A website template is a pre-designed webpage, or set of webpages, that anyone can modify with their own content and images to setup a website.</td>
-													<td class="text-center">15</td>
-													<td class="text-center">$75</td>
-													<td class="text-right">$1,125.00</td>
-												</tr>
-												<tr>
-													<td>2</td>
-													<td><strong>Template Development</strong><br>Web development is a broad term for the work involved in developing a web site for the Internet (World Wide Web) or an intranet (a private network).</td>
-													<td class="text-center">15</td>
-													<td class="text-center">$75</td>
-													<td class="text-right">$1,125.00</td>
-												</tr>
-												<tr class="line">
-													<td>3</td>
-													<td><strong>Testing</strong><br>Take measures to check the quality, performance, or reliability of (something), especially before putting it into widespread use or practice.</td>
-													<td class="text-center">2</td>
-													<td class="text-center">$75</td>
-													<td class="text-right">$150.00</td>
-												</tr>
-												<tr>
-													<td colspan="3"></td>
-													<td class="text-right"><strong>Taxes</strong></td>
-													<td class="text-right"><strong>N/A</strong></td>
-												</tr>
-												<tr>
-													<td colspan="3">
-													</td><td class="text-right"><strong>Total</strong></td>
-													<td class="text-right"><strong>$2,400.00</strong></td>
-												</tr>
-											</tbody>
-										</table>
-									</div>									
-								</div>
-								<div class="row">
-									<div class="col-md-12 text-right identity">
-										<p>Designer identity<br><strong>Jeffrey Williams</strong></p>
-									</div>
-								</div>
+        <html lang="en">
+			<head>
+				<link rel="stylesheet" href="packages/backpack/base/css/budgetInvoice.css">
+				
+				
+				<meta charset="utf-8">
+				<title>Unite (black-yellow)</title>
+				<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+				<meta name="viewport" content="width=device-width, initial-scale=1">
+				<meta name="description" content="Invoicebus Invoice Template">
+				<meta name="author" content="Invoicebus">
+				<meta name="template-hash" content="0c73fb5bcd04e18017faaf8a196dfea5">
+			</head>
+			<body>
+				<div id="container">
+					<section id="memo" style="display:block;">
+						<div class="company-name ibcl_company_name" data-ibcl-id="company_name" >
+							<span class="title1">CITRINO</span> 
+							<br>
+							<span class="title2">ARQUITECTOS</span>
+						</div>
+					
+						<div class="payment-info">
+							<div data-ibcl-id="payment_info1" class="ibcl_payment_info1" >Emilio Romero 137 BIS, MVD</div>
+							<div data-ibcl-id="payment_info2" class="ibcl_payment_info2">099 170 056 - 2308 54 94</div>
+							<div data-ibcl-id="payment_info3" class="ibcl_payment_info3">citrinoarquitectos.com</div>
+							<div data-ibcl-id="payment_info4" class="ibcl_payment_info4">presupuestos@citrinoarquitectos.com</div>
+						</div>
+
+					</section>
+
+					<section id="invoice-title-number">
+						<span id="title" data-ibcl-id="invoice_title" class="ibcl_invoice_title" >Presupuesto</span>
+						<span id="number" data-ibcl-id="invoice_number" class="ibcl_invoice_number" >#0037</span>
+					</section>
+					
+					<div class="clearfix"></div>
+
+					<section id="client-info">
+						<span>Objeto:</span>
+						<div>
+							<span class="client-name ibcl_client_name">Acondicionamiento Sanitario / Obra Nueva</span>
+						</div>
+						<span class="ibcl_bill_to_label" >Cliente:</span>
+						<div>
+							<span class="client-name ibcl_client_name">Espacio Domótica</span>
+						</div>
+						<div>
+							<span class="ibcl_client_address">Montevideo</span>
+						</div>
+						<div>
+							<span class="ibcl_client_city_zip_state" >cliente@gmail.com</span>
+						</div>
+						<div>
+							<span  class="ibcl_client_phone_fax">094875250</span>
+						</div>
+					</section>
+					<div class="clearfix"></div>
+					<section id="invoice-info">
+						<div class="box-left">
+							<div>
+							<span data-ibcl-id="issue_date_label" class="ibcl_issue_date_label">Fecha</span>
+							</div>
+							
+							<div>
+							<span data-ibcl-id="issue_date" class="ibcl_issue_date">11/08/2021</span>
 							</div>
 						</div>
+						<div class="box-right">
+							<div>
+							<span data-ibcl-id="currency_label" class="ibcl_currency_label" >Moneda</span>
+							</div>
+							<div>
+							<span data-ibcl-id="currency" class="ibcl_currency" >USD</span>
+							</div>
+						</div>
+					</section>
+					
+					<div class="clearfix"></div>
+					
+					<section id="items">
+						<div class="desc">
+							<span>Por la presente tenemos el agrado de presentar la siguiente propuesta economica en base a los recaudos suministrados: Memoria técnica de acondicionamiento sanitario y planos.</span>
+						</div>
+						<table cellpadding="0" cellspacing="0">
+							<tbody>
+							<tr>
+								<th>Nº</th>
+								<th>Descripción</th>
+								<th>Unidad</th>
+								<th>Cantidad</th>
+								<th>P. unitario</th>
+								<th>Subtotal</th>
+								<th>Total</th>
+							</tr>
+							<tr class="heading">
+								<td>1</td>
+								<td colspan="6">Acondicionamiento Sanitario / Obra Nueva</td>
+							</tr>
+							<tr>
+								<td>1.1</td>
+								<td>Implantación y replanteo</td>
+								<td>GL</td>
+								<td>1</td>
+								<td>1.200,00</td>
+								<td>1.200,00</td>
+								<td>1.200,00</td>
+							</tr>
+							<tr>
+								<td>1.2</td>
+								<td>Desagües de primaria PVC ∅ 110 (en planta, subterraneo, incluye construcción de Cámaras de Inspección)</td>
+								<td>GL</td>
+								<td>1</td>
+								<td>3.740,00</td>
+								<td>3.740,00</td>
+								<td>3.740,00</td>
+							</tr>
+							<tr>
+								<td>1.3</td>
+								<td>Desagües de primaria PVC ∅ 110 (columnas)</td>
+								<td>GL</td>
+								<td>1</td>
+								<td>300,00</td>
+								<td>300,00</td>
+								<td>300,00</td>
+							</tr>
+							<tr>
+								<td>1.4</td>
+								<td>Desagües de secundaria PVC ∅ 110, ∅ 50 y ∅ 40</td>
+								<td>GL</td>
+								<td>1</td>
+								<td>1.473,00</td>
+								<td>1.473,00</td>
+								<td>1.473,00</td>
+							</tr>
+							<tr>
+								<td>1.5</td>
+								<td>Desagües de pluviales PVC ∅ 160 y ∅ 110 (en planta, subterráneo)</td>
+								<td>GL</td>
+								<td>1</td>
+								<td>5.730,00</td>
+								<td>5.730,00</td>
+								<td>5.730,00</td>
+							</tr>
+							<tr>
+								<td>1.6</td>
+								<td>Desagües de pluviales PVC ∅ 160 y ∅ 110 (en planta, subterraneo)</td>
+								<td>GL</td>
+								<td>1</td>
+								<td>2.545,00</td>
+								<td>2.545,00</td>
+								<td>2.545,00</td>
+							</tr>
+							<tr>
+								<td>1.7</td>
+								<td>Ventilaciones del acondicionamiento sanitario ∅ 110 y ∅ 50</td>
+								<td>GL</td>
+								<td>1</td>
+								<td>1.800,00</td>
+								<td>1.800,00</td>
+								<td>1.800,00</td>
+							</tr>
+							<tr>
+								<td>1.8</td>
+								<td>Abastecimiento de Agua Fria hacia el edificio ∅ 50 (desde el contador de OSE hacia cada servicio cocina y baños).</td>
+								<td>GL</td>
+								<td>1</td>
+								<td>1.600,00</td>
+								<td>1.600,00</td>
+								<td>1.600,00</td>
+							</tr>
+							<tr>
+								<td>1.9</td>
+								<td>Abastecimiento y desagües de baños y cocina (ABAST. de Agua Fria ∅ 40mm, ∅ 32mm - Agua Caliente ∅ 25mm / DESAGÜES ∅ 110 y ∅63)</td>
+								<td>GL</td>
+								<td>1</td>
+								<td>8.200,00</td>
+								<td>8.200,00</td>
+								<td>8.200,00</td>
+							</tr>
+							<tr>
+								<td>1.10</td>
+								<td>Pruebas manometricas e hidraulicas</td>
+								<td>GL</td>
+								<td>1</td>
+								<td>800,00</td>
+								<td>800,00</td>
+								<td>800,00</td>
+							</tr>
+							<tr>
+								<td>1.11</td>
+								<td>Instalación de aparatos sanitarios (losa sanitaria, grifería y accesorios)</td>
+								<td>GL</td>
+								<td>1</td>
+								<td>1.680,00</td>
+								<td>1.680,00</td>
+								<td>1.680,00</td>
+							</tr>
+							<tr>
+								<td>1.12</td>
+								<td>Movimientos de tierra para desagües y abastecimiento. Excavaciones, zanjeos y tapadas.</td>
+								<td>GL</td>
+								<td>1</td>
+								<td>3.100,00</td>
+								<td>3.100,00</td>
+								<td>3.100,00</td>
+							</tr>
+							</tbody>
+						</table>  
+					</section>
+					
+					<section id="sums">
+						<table cellpadding="0" cellspacing="0">
+							<tbody>
+								<tr>
+									<th>Subtotal:</th>
+									<td>USD 32.168,00</td>
+								</tr>
+								
+								<tr>
+									<th>IVA:</th>
+									<td>USD 7.076,96</td>
+								</tr>
+								
+								<tr>
+									<th>LEYES SOCIALES (aprox. 73% del Monto imponible):</th>
+									<td>$ 210.560,00</td>
+								</tr>
+								
+								<tr>
+									<th>Total:</th>
+									<td>USD 39.244,96</td>
+								</tr>	
+							</tbody>
+						</table>
+						<div class="clearfix"></div>
+						<div class="total-stripe"></div>
+					</section>
+					
+					<div class="clearfix"></div>
+					
+					<section id="terms">
+						<span class="ibcl_terms_label">Notas sobre lo presupuestado:</span>
+						<ul class="terms">
+							<li>Los rubros consideran materiales y mano de obra. Se cotizaron productos de la calidad solicitada, nuevos y certificados.</li>
+							<li>Se incluyen en los rubros correspondientes el suministro de Bocas de Desagüe; Piletas de Patio; Rejillas de Piso, Cajas Sifonadas, Camaras de</li>
+							<li>NO SE COTIZÓ: aparatos - losa sanitaria, griferias, sifones cromados, rejas cromadas. Tampoco tramites, elaboración de planos o firma técnica.</li>
+							<li>NO SE COTIZÓ la construcción de la cámara séptica de hormigón armado.</li>
+							<li>Cotización por instalacion en PVC del sistema aerobico y anaerobico de la cámara séptica = USD 650 + IVA dólares americanos</li>
+							<li>LEYES SOCIALES (aprox. 73% del Monto imponible) $ 210.560,00</li>
+						</ul>
+					</section>
+					
+					<section id="terms">
+						<span class="ibcl_terms_label">Condiciones Comerciales:</span>
+						<ul class="terms">
+							<li>Plazo de ejecución: según el progreso de obra.</li>
+							<li>Garantía sobre los trabajos: 2 años tras recepción final de obra.</li>
+							<li>Forma de pago: Acopio del 35%, saldo por avance de obra.</li>
+							<li>Mantenimiento de oferta: 90 días calendario.</li>
+						</ul>
+					</section>
+
+					<div class="company-info">
+						<span>Emilio Romero 137 BIS, MVD</span>
+						<span>099 170 056 - 2308 54 94</span>
+						<br>
+						<span>citrinoarquitectos.com - presupuestos@citrinoarquitectos.com</span>
 					</div>
-					<!-- END INVOICE -->
 				</div>
-</div>');
+			</body>
+		</html>');
         return $pdf->download('mi-archivo.pdf');
 
     }
