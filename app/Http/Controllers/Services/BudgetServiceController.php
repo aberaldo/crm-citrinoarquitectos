@@ -18,8 +18,6 @@ class BudgetServiceController extends Controller
         <html lang="en">
 			<head>
 				<link rel="stylesheet" href="packages/backpack/base/css/budgetInvoice.css">
-				
-				
 				<meta charset="utf-8">
 				<title>Unite (black-yellow)</title>
 				<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -30,70 +28,66 @@ class BudgetServiceController extends Controller
 			</head>
 			<body>
 				<div id="container">
-					<section id="memo" style="display:block;">
-						<div class="company-name ibcl_company_name" data-ibcl-id="company_name" >
-							<span class="title1">CITRINO</span> 
-							<br>
-							<span class="title2">ARQUITECTOS</span>
-						</div>
-					
-						<div class="payment-info">
-							<div data-ibcl-id="payment_info1" class="ibcl_payment_info1" >Emilio Romero 137 BIS, MVD</div>
-							<div data-ibcl-id="payment_info2" class="ibcl_payment_info2">099 170 056 - 2308 54 94</div>
-							<div data-ibcl-id="payment_info3" class="ibcl_payment_info3">citrinoarquitectos.com</div>
-							<div data-ibcl-id="payment_info4" class="ibcl_payment_info4">presupuestos@citrinoarquitectos.com</div>
-						</div>
-
-					</section>
+					<div class="header">
+						<table>
+							<tr>
+								<td>
+									<img width="280" src="https://www.citrinoarquitectos.com/wp-content/uploads/2021/07/citrinoarquitectos.png">
+								</td>
+								
+								<td>
+									<div class="company-info">
+										<div>Emilio Romero 137 BIS, MVD</div>
+										<div>099 170 056 - 2308 54 94</div>
+										<div>citrinoarquitectos.com</div>
+										<div>presupuestos@citrinoarquitectos.com</div>
+									</div>
+								</td>
+							</tr>
+						</table>
+					</div>
 
 					<section id="invoice-title-number">
-						<span id="title" data-ibcl-id="invoice_title" class="ibcl_invoice_title" >Presupuesto</span>
-						<span id="number" data-ibcl-id="invoice_number" class="ibcl_invoice_number" >#0037</span>
+						<div class="title">Presupuesto</div>
+						<div class="number">#0037</div>
 					</section>
 					
-					<div class="clearfix"></div>
-
-					<section id="client-info">
-						<span>Objeto:</span>
-						<div>
-							<span class="client-name ibcl_client_name">Acondicionamiento Sanitario / Obra Nueva</span>
-						</div>
-						<span class="ibcl_bill_to_label" >Cliente:</span>
-						<div>
-							<span class="client-name ibcl_client_name">Espacio Domótica</span>
-						</div>
-						<div>
-							<span class="ibcl_client_address">Montevideo</span>
-						</div>
-						<div>
-							<span class="ibcl_client_city_zip_state" >cliente@gmail.com</span>
-						</div>
-						<div>
-							<span  class="ibcl_client_phone_fax">094875250</span>
-						</div>
-					</section>
-					<div class="clearfix"></div>
-					<section id="invoice-info">
-						<div class="box-left">
-							<div>
-							<span data-ibcl-id="issue_date_label" class="ibcl_issue_date_label">Fecha</span>
-							</div>
+					<table class="client-info">
+						<tr>
+							<td>
+								Objeto:
+							</td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>
+								Acondicionamiento Sanitario / Obra Nueva
+							</td>
+							<td class="date" rowspan="3">Fecha 11/08/2021</td>
+							<td class="currency" rowspan="3">Moneda USD</td>
+						</tr>
+						<tr>
+							<td>
+								Cliente:
+							</td>
 							
-							<div>
-							<span data-ibcl-id="issue_date" class="ibcl_issue_date">11/08/2021</span>
-							</div>
-						</div>
-						<div class="box-right">
-							<div>
-							<span data-ibcl-id="currency_label" class="ibcl_currency_label" >Moneda</span>
-							</div>
-							<div>
-							<span data-ibcl-id="currency" class="ibcl_currency" >USD</span>
-							</div>
-						</div>
-					</section>
-					
-					<div class="clearfix"></div>
+						</tr>
+						<tr>
+							<td>
+								Espacio Domótica
+							</td>
+							
+						</tr>
+						<tr>
+							<td>
+								Montevideo
+								cliente@gmail.com
+								094875250
+							</td>
+							
+						</tr>
+					</table>
 					
 					<section id="items">
 						<div class="desc">
@@ -111,14 +105,14 @@ class BudgetServiceController extends Controller
 								<th>Total</th>
 							</tr>
 							<tr class="heading">
-								<td>1</td>
+								<td class="center">1</td>
 								<td colspan="6">Acondicionamiento Sanitario / Obra Nueva</td>
 							</tr>
 							<tr>
 								<td>1.1</td>
 								<td>Implantación y replanteo</td>
-								<td>GL</td>
-								<td>1</td>
+								<td class="center">GL</td>
+								<td class="center">1</td>
 								<td>1.200,00</td>
 								<td>1.200,00</td>
 								<td>1.200,00</td>
@@ -126,8 +120,8 @@ class BudgetServiceController extends Controller
 							<tr>
 								<td>1.2</td>
 								<td>Desagües de primaria PVC ∅ 110 (en planta, subterraneo, incluye construcción de Cámaras de Inspección)</td>
-								<td>GL</td>
-								<td>1</td>
+								<td class="center">GL</td>
+								<td class="center">1</td>
 								<td>3.740,00</td>
 								<td>3.740,00</td>
 								<td>3.740,00</td>
@@ -135,8 +129,8 @@ class BudgetServiceController extends Controller
 							<tr>
 								<td>1.3</td>
 								<td>Desagües de primaria PVC ∅ 110 (columnas)</td>
-								<td>GL</td>
-								<td>1</td>
+								<td class="center">GL</td>
+								<td class="center">1</td>
 								<td>300,00</td>
 								<td>300,00</td>
 								<td>300,00</td>
@@ -144,8 +138,8 @@ class BudgetServiceController extends Controller
 							<tr>
 								<td>1.4</td>
 								<td>Desagües de secundaria PVC ∅ 110, ∅ 50 y ∅ 40</td>
-								<td>GL</td>
-								<td>1</td>
+								<td class="center">GL</td>
+								<td class="center">1</td>
 								<td>1.473,00</td>
 								<td>1.473,00</td>
 								<td>1.473,00</td>
@@ -153,8 +147,8 @@ class BudgetServiceController extends Controller
 							<tr>
 								<td>1.5</td>
 								<td>Desagües de pluviales PVC ∅ 160 y ∅ 110 (en planta, subterráneo)</td>
-								<td>GL</td>
-								<td>1</td>
+								<td class="center">GL</td>
+								<td class="center">1</td>
 								<td>5.730,00</td>
 								<td>5.730,00</td>
 								<td>5.730,00</td>
@@ -162,8 +156,8 @@ class BudgetServiceController extends Controller
 							<tr>
 								<td>1.6</td>
 								<td>Desagües de pluviales PVC ∅ 160 y ∅ 110 (en planta, subterraneo)</td>
-								<td>GL</td>
-								<td>1</td>
+								<td class="center">GL</td>
+								<td class="center">1</td>
 								<td>2.545,00</td>
 								<td>2.545,00</td>
 								<td>2.545,00</td>
@@ -171,8 +165,8 @@ class BudgetServiceController extends Controller
 							<tr>
 								<td>1.7</td>
 								<td>Ventilaciones del acondicionamiento sanitario ∅ 110 y ∅ 50</td>
-								<td>GL</td>
-								<td>1</td>
+								<td class="center">GL</td>
+								<td class="center">1</td>
 								<td>1.800,00</td>
 								<td>1.800,00</td>
 								<td>1.800,00</td>
@@ -180,8 +174,8 @@ class BudgetServiceController extends Controller
 							<tr>
 								<td>1.8</td>
 								<td>Abastecimiento de Agua Fria hacia el edificio ∅ 50 (desde el contador de OSE hacia cada servicio cocina y baños).</td>
-								<td>GL</td>
-								<td>1</td>
+								<td class="center">GL</td>
+								<td class="center">1</td>
 								<td>1.600,00</td>
 								<td>1.600,00</td>
 								<td>1.600,00</td>
@@ -189,8 +183,8 @@ class BudgetServiceController extends Controller
 							<tr>
 								<td>1.9</td>
 								<td>Abastecimiento y desagües de baños y cocina (ABAST. de Agua Fria ∅ 40mm, ∅ 32mm - Agua Caliente ∅ 25mm / DESAGÜES ∅ 110 y ∅63)</td>
-								<td>GL</td>
-								<td>1</td>
+								<td class="center">GL</td>
+								<td class="center">1</td>
 								<td>8.200,00</td>
 								<td>8.200,00</td>
 								<td>8.200,00</td>
@@ -198,8 +192,8 @@ class BudgetServiceController extends Controller
 							<tr>
 								<td>1.10</td>
 								<td>Pruebas manometricas e hidraulicas</td>
-								<td>GL</td>
-								<td>1</td>
+								<td class="center">GL</td>
+								<td class="center">1</td>
 								<td>800,00</td>
 								<td>800,00</td>
 								<td>800,00</td>
@@ -207,8 +201,8 @@ class BudgetServiceController extends Controller
 							<tr>
 								<td>1.11</td>
 								<td>Instalación de aparatos sanitarios (losa sanitaria, grifería y accesorios)</td>
-								<td>GL</td>
-								<td>1</td>
+								<td class="center">GL</td>
+								<td class="center">1</td>
 								<td>1.680,00</td>
 								<td>1.680,00</td>
 								<td>1.680,00</td>
@@ -216,8 +210,8 @@ class BudgetServiceController extends Controller
 							<tr>
 								<td>1.12</td>
 								<td>Movimientos de tierra para desagües y abastecimiento. Excavaciones, zanjeos y tapadas.</td>
-								<td>GL</td>
-								<td>1</td>
+								<td class="center">GL</td>
+								<td class="center">1</td>
 								<td>3.100,00</td>
 								<td>3.100,00</td>
 								<td>3.100,00</td>
@@ -231,22 +225,22 @@ class BudgetServiceController extends Controller
 							<tbody>
 								<tr>
 									<th>Subtotal:</th>
-									<td>USD 32.168,00</td>
+									<td class="right">USD 32.168,00</td>
 								</tr>
 								
 								<tr>
 									<th>IVA:</th>
-									<td>USD 7.076,96</td>
+									<td class="right">USD 7.076,96</td>
 								</tr>
 								
 								<tr>
 									<th>LEYES SOCIALES (aprox. 73% del Monto imponible):</th>
-									<td>$ 210.560,00</td>
+									<td class="right">$ 210.560,00</td>
 								</tr>
 								
 								<tr>
 									<th>Total:</th>
-									<td>USD 39.244,96</td>
+									<td class="right">USD 39.244,96</td>
 								</tr>	
 							</tbody>
 						</table>
