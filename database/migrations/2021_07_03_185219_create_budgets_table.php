@@ -19,10 +19,14 @@ class CreateBudgetsTable extends Migration
             $table->foreignId('client_id')->constrained()->nullable();
             $table->date('date')->nullable();
             $table->string('address')->nullable();
+            $table->string('currency')->nullable();
+            $table->float('social_laws_amount')->nullable();
+            $table->string('payment_method')->nullable();
             $table->json('headings')->nullable();
             $table->json('conditions')->nullable();
-            $table->longText('notes')->nullable();
+            $table->json('notes')->nullable();
             $table->json('team')->nullable();
+            $table->string('status')->nullable();
             $table->timestamps();
         });
     }

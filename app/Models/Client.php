@@ -22,7 +22,6 @@ class Client extends Model
     // protected $fillable = [];
     // protected $hidden = [];
     // protected $dates = [];
-    protected $appends = ['full_name'];
 
     /*
     |--------------------------------------------------------------------------
@@ -50,10 +49,7 @@ class Client extends Model
     | ACCESSORS
     |--------------------------------------------------------------------------
     */
-    public function getFullNameAttribute()
-    {
-        return $this->firstname." ".$this->lastname;
-    }
+
     /*
     |--------------------------------------------------------------------------
     | MUTATORS

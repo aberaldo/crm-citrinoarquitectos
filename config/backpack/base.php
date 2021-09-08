@@ -43,7 +43,7 @@ return [
     // CSS files that are loaded in all pages, using Laravel's asset() helper
     'styles' => [
         'packages/backpack/base/css/bundle.css',
-
+        'packages/backpack/base/css/crmcustom.css',
         // Here's what's inside the bundle:
         // 'packages/@digitallyhappy/backstrap/css/style.min.css',
         // 'packages/animate.css/animate.min.css',
@@ -72,6 +72,7 @@ return [
 
     // Menu logo. You can replace this with an <img> tag if you have a logo.
     'project_logo'   => '<b>Citrino</b>Arquitectos',
+    //'project_logo'   => '<img src="https://www.citrinoarquitectos.com/wp-content/uploads/2021/07/citrino-logo-alambre.png" width="45">',
 
     // Show / hide breadcrumbs on admin panel pages.
     'breadcrumbs' => true,

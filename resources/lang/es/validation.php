@@ -196,6 +196,9 @@ return [
         'message'               => 'mensaje',
 
         // custom
-        
+        'currency'              => 'moneda',
+        'payment_method'        => 'forma de pago',
+        'status'                => 'estado',
+        'social_laws_amount'    => 'monto leyes sociales',
     ],
 ];

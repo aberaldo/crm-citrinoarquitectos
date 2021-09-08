@@ -56,20 +56,33 @@ class BudgetCrudController extends CrudController
             'type'         => 'relationship',
             'label'        => trans('crud.client.client'),
             'entity'    => 'client',
-            'attribute' => 'full_name',
+            'attribute' => 'name',
             'model'     => App\Models\Client::class, 
         ]);
-
+        
         $this->crud->addColumn([
-            'name'         => 'title',
+            'name'         => 'address',
             'type'         => 'text',
-            'label'        => trans('crud.budget.title'),
+            'label'        => trans('crud.budget.address'),
         ]);
 
         $this->crud->addColumn([
             'name'         => 'date',
             'type'         => 'date',
+            'format' => 'DD/MM/YYYY',
             'label'        => trans('crud.budget.date'),
+        ]);
+        
+        $this->crud->addColumn([
+            'name'         => 'currency',
+            'type'         => 'text',
+            'label'        => trans('crud.budget.currency'),
+        ]);
+        
+        $this->crud->addColumn([
+            'name'         => 'status',
+            'type'         => 'text',
+            'label'        => trans('crud.budget.status'),
         ]);
 
         $this->crud->addFilter([
@@ -88,7 +101,7 @@ class BudgetCrudController extends CrudController
             'label' => trans('crud.client.client'),
             'method' => 'POST',
             'minimum_input_length' => 0,
-            'select_attribute' => 'full_name',
+            'select_attribute' => 'name',
             'select_key' => 'id',
         ], 
         backpack_url('budget/fetch/client'),
@@ -105,6 +118,17 @@ class BudgetCrudController extends CrudController
         function($value) {
             $this->crud->addClause('where', 'title', 'LIKE', "%$value%");
         });
+
+        $this->crud->addFilter([
+            'name'  => 'status',
+            'type'  => 'dropdown',
+            'label' => trans('crud.budget.status'),
+          ], [
+            'Pago' => 'Pago',
+            'Impago' => 'Impago',
+          ], function($value) { // if the filter is active
+             $this->crud->addClause('where', 'status', $value);
+          });
     }
 
     /**
@@ -135,13 +159,13 @@ class BudgetCrudController extends CrudController
             'label' => trans('crud.client.client'),
             'type' => "relationship",
             'name'  => 'client_id',
-            'attribute' => 'full_name',
             'ajax' => true,
             'data_source' => backpack_url('budget/fetch/client'),
             'placeholder' => trans('crud.client.client'),
             'minimum_input_length' => 0,
             'wrapper' => ['class' => 'form-group col-md-6'],
             'tab' => trans('crud.budget.head'),
+            'allows_null'     => true,
         ]);
         
         $this->crud->addField([
@@ -159,10 +183,57 @@ class BudgetCrudController extends CrudController
             'label' => trans('crud.budget.address'),
             'type'  => 'text',
             'wrapper'   => [
-                'class' => 'form-group col-md-12'
+                'class' => 'form-group col-md-8'
             ],
             'tab' => trans('crud.budget.head'),
         ]);
+        
+        $this->crud->addField([
+            'name'  => 'social_laws_amount',
+            'label' => trans('crud.budget.social_laws_amount'),
+            'type'  => 'number',
+            'wrapper'   => [
+                'class' => 'form-group col-md-4'
+            ],
+            'hint'       => 'Monto en pesos uruguayos',
+            'tab' => trans('crud.budget.head'),
+        ]);
+        
+        $this->crud->addField([
+            'name'        => 'currency',
+            'label' => trans('crud.budget.currency'),
+            'type'        => 'select_from_array',
+            'options'     => ['UYU' => trans('crud.budget.uyu'), 'USD' => trans('crud.budget.usd')],
+            'allows_null' => true,
+            'wrapper'   => [
+                'class' => 'form-group col-md-4'
+            ],
+            'tab' => trans('crud.budget.head'),
+        ],);
+        
+        $this->crud->addField([
+            'name'        => 'payment_method',
+            'label' => trans('crud.budget.payment_method'),
+            'type'        => 'select_from_array',
+            'options'     => ['Contado' => 'Contado', 'Crédito' => 'Crédito'],
+            'allows_null' => true,
+            'wrapper'   => [
+                'class' => 'form-group col-md-4'
+            ],
+            'tab' => trans('crud.budget.head'),
+        ],);
+        
+        $this->crud->addField([
+            'name'        => 'status',
+            'label'       => trans('crud.budget.status'),
+            'type'        => 'select_from_array',
+            'options'     => ['Pago' => 'Pago', 'Impago' => 'Impago'],
+            'allows_null' => true,
+            'wrapper'   => [
+                'class' => 'form-group col-md-4'
+            ],
+            'tab' => trans('crud.budget.head'),
+        ],);
         
         $this->crud->addField([
             'name'  => 'headings',
@@ -183,7 +254,7 @@ class BudgetCrudController extends CrudController
                         'description'  => [
                             'label' => trans('crud.budget.description'),
                             'type' => 'textarea',
-                            'class' => 'col-sm-6',
+                            'class' => 'col-sm-4',
                         ],
                         'unit'  => [
                             'label' => trans('crud.budget.unit'),
@@ -197,6 +268,11 @@ class BudgetCrudController extends CrudController
                         ],
                         'price'  => [
                             'label' => trans('crud.budget.price'),
+                            'type' => 'number',
+                            'class' => 'col-sm-2',
+                        ],
+                        'tax'  => [
+                            'label' => trans('crud.budget.tax'),
                             'type' => 'number',
                             'class' => 'col-sm-2',
                         ],
@@ -255,13 +331,30 @@ class BudgetCrudController extends CrudController
             'tab' => trans('crud.budget.conditions'),
         ],);
         
-        $this->crud->addField([
+        /*$this->crud->addField([
             'name'            => 'notes',
             'label'           => trans('crud.budget.notes'),
             'type'            => 'textarea',
             'attributes' => [
                 'rows' => 5,
             ],
+            'tab' => trans('crud.budget.notes'),
+        ],);*/
+
+        $this->crud->addField([
+            'name'            => 'notes',
+            'label'           => '',
+            'type'            => 'table_citrino',
+            'entity_singular' => trans('crud.budget.note'),
+            'columns'         => [
+                'note'  => [
+                    'label' => trans('crud.budget.notes'),
+                    'type' => 'text',
+                    'class' => 'col-sm-10',
+                ],
+            ],
+            'max' => 50,
+            'min' => 0,
             'tab' => trans('crud.budget.notes'),
         ],);
         
@@ -296,7 +389,6 @@ class BudgetCrudController extends CrudController
 
         return $this->fetch([
             'model' => \App\Models\Client::class,
-            'searchable_attributes' => ['firstname', 'lastname'],
         ]);
        
     }

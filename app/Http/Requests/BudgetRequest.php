@@ -30,6 +30,10 @@ class BudgetRequest extends FormRequest
             'client_id' => 'required|min:1|max:255',
             'date' => 'required|min:3|max:255',
             'address' => 'required|min:3|max:255',
+            'currency' => 'required|min:1|max:255',
+            'payment_method' => 'required|min:1|max:255',
+            'status' => 'required|min:1|max:255',
+            'social_laws_amount' => 'required|min:1|max:255',
         ];
     }
 

@@ -76,6 +76,37 @@ class Budget extends Model
     {           
         return $this->subtotal * 1.22;
     }
+    
+    public function getHeadingsDataAttribute()
+    {           
+        $ret = [];
+        $data = json_decode($this->headings, true);
+        
+        foreach ($data as $dt) {
+            $a= json_decode($dt['subheading'], true);
+            $ret[] = [
+                'heading' => $dt['heading'],
+                'subheading' => $a
+            ];
+        }
+
+        return $ret;
+    }
+    
+    public function getConditionsDataAttribute()
+    {           
+        return json_decode($this->conditions, true);
+    }
+    
+    public function getNotesDataAttribute()
+    {           
+        return json_decode($this->notes, true);
+    }
+    
+    public function getTeamDataAttribute()
+    {           
+        return json_decode($this->team, true);
+    }
     /*
     |--------------------------------------------------------------------------
     | MUTATORS

@@ -42,18 +42,20 @@ class ClientCrudController extends CrudController
         $this->crud->denyAccess('show');
         
         $this->crud->addColumn([
-            'name'      => 'firstname',
-            'label'     => trans('crud.client.firstname'),
+            'name'      => 'name',
+            'label'     => trans('crud.client.name'),
         ]);
         
         $this->crud->addColumn([
-            'name'      => 'lastname',
-            'label'     => trans('crud.client.lastname'),
+            'name'      => 'created_at',
+            'label'     => trans('crud.client.date'),
+            'type'  => 'date',
+            'format' => 'DD/MM/YYYY'
         ]);
         
         $this->crud->addColumn([
-            'name'      => 'ci',
-            'label'     => trans('crud.client.ci'),
+            'name'      => 'address',
+            'label'     => trans('crud.client.address'),
         ]);
         
         $this->crud->addColumn([
@@ -65,35 +67,70 @@ class ClientCrudController extends CrudController
             'name'      => 'phone',
             'label'     => trans('crud.client.phone'),
         ]);
+        
+        $this->crud->addColumn([
+            'name'      => 'company',
+            'label'     => trans('crud.client.company'),
+        ]);
+        
+        $this->crud->addColumn([
+            'name'      => 'rut',
+            'label'     => trans('crud.client.rut'),
+        ]);
+        
+        $this->crud->addColumn([
+            'name'      => 'fiscal_address',
+            'label'     => trans('crud.client.fiscal_address'),
+        ]);
 
         $this->crud->addFilter([
             'type'  => 'text',
-            'name'  => 'firstname',
-            'label' => trans('crud.client.firstname')
+            'name'  => 'name',
+            'label' => trans('crud.client.name')
         ], 
         false, 
         function($value) {
-            $this->crud->addClause('where', 'firstname', 'LIKE', "%$value%");
+            $this->crud->addClause('where', 'name', 'LIKE', "%$value%");
         });
         
         $this->crud->addFilter([
             'type'  => 'text',
-            'name'  => 'lastname',
-            'label' => trans('crud.client.lastname')
+            'name'  => 'address',
+            'label' => trans('crud.client.address')
         ], 
         false, 
         function($value) {
-            $this->crud->addClause('where', 'lastname', 'LIKE', "%$value%");
+            $this->crud->addClause('where', 'address', 'LIKE', "%$value%");
         });
         
         $this->crud->addFilter([
             'type'  => 'text',
-            'name'  => 'ci',
-            'label' => trans('crud.client.ci')
+            'name'  => 'email',
+            'label' => trans('crud.client.email')
         ], 
         false, 
         function($value) {
-            $this->crud->addClause('where', 'ci', 'LIKE', "%$value%");
+            $this->crud->addClause('where', 'email', 'LIKE', "%$value%");
+        });
+        
+        $this->crud->addFilter([
+            'type'  => 'text',
+            'name'  => 'phone',
+            'label' => trans('crud.client.phone')
+        ], 
+        false, 
+        function($value) {
+            $this->crud->addClause('where', 'phone', 'LIKE', "%$value%");
+        });
+        
+        $this->crud->addFilter([
+            'type'  => 'text',
+            'name'  => 'company',
+            'label' => trans('crud.client.company')
+        ], 
+        false, 
+        function($value) {
+            $this->crud->addClause('where', 'company', 'LIKE', "%$value%");
         });
     }
 
@@ -108,8 +145,8 @@ class ClientCrudController extends CrudController
         CRUD::setValidation(ClientRequest::class);
 
         $this->crud->addField([
-            'name'  => 'firstname',
-            'label' => trans('crud.client.firstname'),
+            'name'  => 'name',
+            'label' => trans('crud.client.name'),
             'type'  => 'text',
             'wrapper'   => [
                 'class' => 'form-group col-md-6'
@@ -117,17 +154,8 @@ class ClientCrudController extends CrudController
         ]);
         
         $this->crud->addField([
-            'name'  => 'lastname',
-            'label' => trans('crud.client.lastname'),
-            'type'  => 'text',
-            'wrapper'   => [
-                'class' => 'form-group col-md-6'
-            ],
-        ]);
-        
-        $this->crud->addField([
-            'name'  => 'ci',
-            'label' => trans('crud.client.ci'),
+            'name'  => 'address',
+            'label' => trans('crud.client.address'),
             'type'  => 'text',
             'wrapper'   => [
                 'class' => 'form-group col-md-6'
@@ -137,7 +165,7 @@ class ClientCrudController extends CrudController
         $this->crud->addField([
             'name'  => 'email',
             'label' => trans('crud.client.email'),
-            'type'  => 'email',
+            'type'  => 'text',
             'wrapper'   => [
                 'class' => 'form-group col-md-6'
             ],
@@ -146,6 +174,33 @@ class ClientCrudController extends CrudController
         $this->crud->addField([
             'name'  => 'phone',
             'label' => trans('crud.client.phone'),
+            'type'  => 'text',
+            'wrapper'   => [
+                'class' => 'form-group col-md-6'
+            ],
+        ]);
+        
+        $this->crud->addField([
+            'name'  => 'company',
+            'label' => trans('crud.client.company'),
+            'type'  => 'text',
+            'wrapper'   => [
+                'class' => 'form-group col-md-6'
+            ],
+        ]);
+        
+        $this->crud->addField([
+            'name'  => 'rut',
+            'label' => trans('crud.client.rut'),
+            'type'  => 'text',
+            'wrapper'   => [
+                'class' => 'form-group col-md-6'
+            ],
+        ]);
+        
+        $this->crud->addField([
+            'name'  => 'fiscal_address',
+            'label' => trans('crud.client.fiscal_address'),
             'type'  => 'text',
             'wrapper'   => [
                 'class' => 'form-group col-md-6'
