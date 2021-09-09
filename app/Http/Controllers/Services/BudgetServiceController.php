@@ -14,7 +14,7 @@ class BudgetServiceController extends Controller
         $this->budget = Budget::find($request->route('id'));
         $pdf = app('dompdf.wrapper');
 		$date = date('d/m/Y', strtotime($this->budget->date));
-		//dd($this->budget->team_data);
+
 		if ($this->budget->currency == "UYU") {
 			$currency = trans('crud.budget.uyu');
 		} else {
@@ -231,7 +231,8 @@ class BudgetServiceController extends Controller
         
 		$htm = mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8');
 		$pdf->loadHTML($htm);
-        return $pdf->download('mi-archivo.pdf');
+		$name = "Presupuesto ".$this->budget->client->name." ".$this->budget->date.".pdf";
+        return $pdf->download($name);
 
     }
 }
