@@ -234,6 +234,23 @@ class BudgetCrudController extends CrudController
             ],
             'tab' => trans('crud.budget.head'),
         ],);
+
+        $this->crud->addField([
+            'name'  => 'presentation_desc',
+            'label' => trans('crud.budget.presentation_desc'),
+            'type'  => 'text',
+            'wrapper'   => [
+                'class' => 'form-group col-md-12'
+            ],
+            'tab' => trans('crud.budget.head'),
+        ]);
+        
+        $this->crud->addField([
+            'name'  => 'observations',
+            'label' => trans('crud.budget.observations'),
+            'type'  => 'textarea',
+            'tab' => trans('crud.budget.head'),
+        ],);
         
         $this->crud->addField([
             'name'  => 'headings',

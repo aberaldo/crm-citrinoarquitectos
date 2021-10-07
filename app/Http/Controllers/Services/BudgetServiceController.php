@@ -70,18 +70,24 @@ class BudgetServiceController extends Controller
 		}
 
 		$conditions = '';
-		foreach ($this->budget->conditions_data as $condition) {
-			$conditions .= '<li>'.$condition['name'].': '.$condition['desc'].'</li>';
+		if ($this->budget->conditions_data) {
+			foreach ($this->budget->conditions_data as $condition) {
+				$conditions .= '<li>'.$condition['name'].': '.$condition['desc'].'</li>';
+			}
 		}
 		
 		$notes = '';
-		foreach ($this->budget->notes_data as $note) {
-			$notes .= '<li>'.$note['note'].'</li>';
+		if($this->budget->notes_data) {
+			foreach ($this->budget->notes_data as $note) {
+				$notes .= '<li>'.$note['note'].'</li>';
+			}
 		}
-		
+			
 		$teams = '';
-		foreach ($this->budget->team_data as $team) {
-			$teams .= '<li>'.$team['name'].': '.$team['desc'].'</li>';
+		if($this->budget->team_data) {
+			foreach ($this->budget->team_data as $team) {
+				$teams .= '<li>'.$team['name'].': '.$team['desc'].'</li>';
+			}
 		}
 
 		$html = '
@@ -172,7 +178,7 @@ class BudgetServiceController extends Controller
 					<p style="page-break-after: never;">
 						<section id="items">
 							<div class="desc">
-								<span>Tenemos el agrado de presentarles la siguiente propuesta de acuerdo a la visita de obra realizada al lugar.</span>
+								<span>'.$this->budget->presentation_desc.'</span>
 							</div>
 							<table class="resume" cellpadding="0" cellspacing="0">
 								<tr>

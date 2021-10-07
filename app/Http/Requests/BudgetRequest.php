@@ -34,6 +34,7 @@ class BudgetRequest extends FormRequest
             'payment_method' => 'required|min:1|max:255',
             'status' => 'required|min:1|max:255',
             'social_laws_amount' => 'required|min:1|max:255',
+            'presentation_desc' => 'required|min:1|max:999',
         ];
     }
 

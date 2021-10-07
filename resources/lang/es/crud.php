@@ -43,6 +43,8 @@ return [
         'usd' => 'USD',
         'social_laws_amount' => 'Monto leyes sociales',
         'tax' => 'Monto imponible',
+        'presentation_desc' => 'Descripcion de presentación',
+        'observations' => 'Observaciones'
     ],
     
     'client' => [
