@@ -29,6 +29,7 @@ class ClientCrudController extends CrudController
         CRUD::setModel(\App\Models\Client::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/client');
         CRUD::setEntityNameStrings(trans('crud.client.client'), trans('crud.client.clients'));
+        $this->crud->enableExportButtons();
     }
 
     /**
