@@ -69,17 +69,17 @@ class BudgetServiceController extends Controller
 			$headings .= $heading_head.$heading_body;
 		}
 
-		$conditions = '';
-		if ($this->budget->conditions_data) {
-			foreach ($this->budget->conditions_data as $condition) {
-				$conditions .= '<li>'.$condition['name'].': '.$condition['desc'].'</li>';
-			}
-		}
-		
 		$notes = '';
 		if($this->budget->notes_data) {
 			foreach ($this->budget->notes_data as $note) {
 				$notes .= '<li>'.$note['note'].'</li>';
+			}
+		}
+
+		$conditions = '';
+		if ($this->budget->conditions_data) {
+			foreach ($this->budget->conditions_data as $condition) {
+				$conditions .= '<li>'.$condition['name'].': '.$condition['desc'].'</li>';
 			}
 		}
 			
@@ -213,23 +213,30 @@ class BudgetServiceController extends Controller
 									<td class="unidad1" colspan="2">'.trans('crud.budget.uyu').number_format($this->budget->social_laws_amount, 2, ',', '.').'</td>
 								</tr>
 							</table>  
-						</section>
-	
-						<section id="terms">
-							<span>Notas sobre lo presupuestado:</span>
-							<ul>'.$notes.'</ul>
-						</section>
+						</section>';
 
-						<section id="terms">
-							<span>Condiciones Comerciales:</span>
-							<ul>'.$conditions.'</ul>
-						</section>
+						if ($notes != '') {
+							$html .= '<section id="terms">
+										<span>Notas sobre lo presupuestado:</span>
+										<ul>'.$notes.'</ul>
+									  </section>'; 
+						}
 
-						<section id="terms">
-							<span>Equipo técnico:</span>
-							<ul>'.$teams.'</ul>
-						</section>
-			
+						if ($conditions != '') {
+							$html .= '<section id="terms">
+										<span>Condiciones Comerciales:</span>
+										<ul>'.$conditions.'</ul>
+									  </section>'; 
+						}
+						
+						if ($teams != '') {
+							$html .= '<section id="terms">
+										<span>Equipo técnico:</span>
+										<ul>'.$teams.'</ul>
+									  </section>'; 
+						}
+						
+						$html .= '
 					</p>
 				</main>
 			</body>
