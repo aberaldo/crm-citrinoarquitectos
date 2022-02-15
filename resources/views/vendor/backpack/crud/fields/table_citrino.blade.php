@@ -4,7 +4,6 @@
     $max = isset($field['max']) && (int) $field['max'] > 0 ? $field['max'] : -1;
     $min = isset($field['min']) && (int) $field['min'] > 0 ? $field['min'] : -1;
     $item_name = strtolower(isset($field['entity_singular']) && ! empty($field['entity_singular']) ? $field['entity_singular'] : $field['label']);
-
     $items = old(square_brackets_to_dots($field['name'])) ?? $field['value'] ?? $field['default'] ?? '';
 
     // make sure no matter the attribute casting
@@ -70,7 +69,7 @@
                             </td>
                         @else
                             <td class="{{ $column['class'] }}">
-                                <input class="form-control " type="{{ $column['type'] }}" data-cell-name="item.{{ $name }}" min="0">
+                                <input class="form-control " type="{{ $column['type'] }}" data-cell-name="item.{{ $name }}" min="0" value="{{ $column['default'] }}">
                             </td>
                         @endif
                     @endforeach

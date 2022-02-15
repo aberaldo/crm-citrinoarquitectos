@@ -271,26 +271,31 @@ class BudgetCrudController extends CrudController
                         'description'  => [
                             'label' => trans('crud.budget.description'),
                             'type' => 'textarea',
+                            'default' => '',
                             'class' => 'col-sm-4',
                         ],
                         'unit'  => [
                             'label' => trans('crud.budget.unit'),
                             'type' => 'text',
+                            'default' => '',
                             'class' => 'col-sm-1',
                         ],
                         'qty'  => [
                             'label' => trans('crud.budget.qty'),
                             'type' => 'number',
+                            'default' => '0',
                             'class' => 'col-sm-1',
                         ],
                         'price'  => [
                             'label' => trans('crud.budget.price'),
                             'type' => 'number',
+                            'default' => '0',
                             'class' => 'col-sm-2',
                         ],
                         'tax'  => [
                             'label' => trans('crud.budget.tax'),
                             'type' => 'number',
+                            'default' => '0',
                             'class' => 'col-sm-2',
                         ],
                     ],
@@ -367,6 +372,7 @@ class BudgetCrudController extends CrudController
                 'note'  => [
                     'label' => trans('crud.budget.notes'),
                     'type' => 'text',
+                    'default' => '',
                     'class' => 'col-sm-10',
                 ],
             ],
